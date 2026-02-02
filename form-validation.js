@@ -39,9 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
 
-            // Remove honeypot from submission data
+           // Remove honeypot from submission data
             if (honeypot) {
-                honeypot.removeAttribute('name');
+            honeypot.removeAttribute('name');
+            honeypot.removeAttribute('data-name');
             }
 
             // Email domain check
