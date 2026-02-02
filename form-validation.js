@@ -4,35 +4,42 @@ document.addEventListener('DOMContentLoaded', function() {
   ]);
 
   const form = document.querySelector('#email-form');
+    console.log('Form found:', form);
     if (!form) return;
 
     const formBlock = form.closest('.w-form');
     const emailInput = form.querySelector('input[type="email"]');
     const honeypot = form.querySelector('.website-field input');
-    const errorBlock = formBlock.querySelector('.w-form-fail');
-    const errorText = errorBlock.querySelector('.body-text');
+    const errorBlock = formBlock?.querySelector('.w-form-fail');
+    const errorText = errorBlock?.querySelector('.body-text');
+
+    console.log('Email input:', emailInput);
+    console.log('Error block:', errorBlock);
+    console.log('Error text:', errorText);
 
     function showError(message) {
-        errorText.textContent = message;
-        errorBlock.style.display = 'block';
+        if (errorText) errorText.textContent = message;
+        if (errorBlock) errorBlock.style.display = 'block';
     }
 
     function hideError() {
-        errorBlock.style.display = 'none';
+        if (errorBlock) errorBlock.style.display = 'none';
     }
 
     form.addEventListener('submit', function(e) {
+        console.log('Submit handler fired!');
+        
         e.preventDefault();
         e.stopImmediatePropagation();
         
         hideError();
 
-        // Honeypot check — silent fail
+        // Honeypot check
         if (honeypot && honeypot.value !== '') {
+            console.log('Honeypot filled - blocking');
             return false;
         }
 
-        // Remove honeypot from submission data
         if (honeypot) {
             honeypot.removeAttribute('name');
         }
@@ -40,13 +47,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Email domain check
         const email = emailInput.value.toLowerCase().trim();
         const domain = email.split('@')[1];
+        console.log('Email:', email, 'Domain:', domain);
+        console.log('Is blocked:', blockedDomains.has(domain));
 
         if (blockedDomains.has(domain)) {
             showError('A business email address is required.');
             return false;
         }
 
-        // Validation passed — submit via Webflow's native method
+        console.log('Validation passed - submitting');
         form.submit();
     }, true);
+    
+    console.log('Event listener attached');
 });
