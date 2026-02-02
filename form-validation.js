@@ -8,7 +8,7 @@ if (!form) return;
 
 const formBlock = form.closest('.w-form');
 const emailInput = form.querySelector('input[type="email"]');
-const honeypot = form.querySelector('.honeypot-field input');
+const honeypot = form.querySelector('.website-field input');
 const errorBlock = formBlock.querySelector('.w-form-fail');
 const errorText = errorBlock.querySelector('.body-text');
 
