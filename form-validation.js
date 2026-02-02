@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
 
-           // Remove honeypot from DOM so it's not submitted at all
+           // Remove honeypot to not submit empty field
             if (honeypot) {
             honeypot.remove();
             }
